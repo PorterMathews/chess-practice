@@ -56,7 +56,39 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        for (int col = 0; col <= 8; col++){
+            for (int row = 0; row <= 8; row++) {
+                chessBoard[row][col]  = null;
+            }
+
+            col = 1;
+            while (col <= 8) {
+                addPiece(new ChessPosition(2, col), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
+                addPiece(new ChessPosition(7, col), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
+                col ++;
+            }
+
+            //White pieces
+            addPiece(new ChessPosition(1, 1), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
+            addPiece(new ChessPosition(1, 2), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
+            addPiece(new ChessPosition(1,3), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP));
+            addPiece(new ChessPosition(1, 4), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.QUEEN));
+            addPiece(new ChessPosition(1,5), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KING));
+            addPiece(new ChessPosition(1,6), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP));
+            addPiece(new ChessPosition(1, 7), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
+            addPiece(new ChessPosition(1, 8), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
+
+            //Black pieces
+            addPiece(new ChessPosition(8, 1), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK));
+            addPiece(new ChessPosition(8, 2), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT));
+            addPiece(new ChessPosition(8,3), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP));
+            addPiece(new ChessPosition(8, 4), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.QUEEN));
+            addPiece(new ChessPosition(8,5), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KING));
+            addPiece(new ChessPosition(8,6), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP));
+            addPiece(new ChessPosition(8, 7), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT));
+            addPiece(new ChessPosition(8, 8), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK));
+
+        }
     }
 
 
@@ -93,6 +125,17 @@ public class ChessBoard {
         return destinationPiece.getTeamColor() != piece.getTeamColor();
     }
 
+    public boolean isPawnSpaceOccupiedByEnemy(ChessPosition position, ChessPiece piece) {
+        if (piece == null) {
+            throw new RuntimeException("No moving piece found");
+        }
+        if (getPiece(position) == null) {
+            return false;
+        }
+        ChessPiece destinationPiece = getPiece(position);
+        return destinationPiece.getTeamColor() != piece.getTeamColor();
+    }
+
     /**
      *
      * @param position The position that you're checking if it is occupied
@@ -119,5 +162,9 @@ public class ChessBoard {
      */
     public boolean validMovePawn(ChessPosition position) {
         return isInBounds(position) && !isSpaceOccupied(position);
+    }
+
+    public boolean validAttackPawn(ChessPosition position, ChessPiece myPiece) {
+        return isInBounds(position) && isPawnSpaceOccupiedByEnemy(position, myPiece);
     }
 }

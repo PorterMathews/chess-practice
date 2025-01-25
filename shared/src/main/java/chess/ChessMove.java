@@ -11,7 +11,7 @@ import java.util.Objects;
 public class ChessMove {
     private ChessPosition startPosition;
     private ChessPosition endPosition;
-    private ChessPiece.PieceType promotionPiece;
+    private final ChessPiece.PieceType promotionPiece;
 
 
     @Override
@@ -32,7 +32,7 @@ public class ChessMove {
                      ChessPiece.PieceType promotionPiece) {
         this.startPosition = startPosition;
         this.endPosition = endPosition;
-        this.promotionPiece = null;
+        this.promotionPiece = promotionPiece;
     }
 
     /**

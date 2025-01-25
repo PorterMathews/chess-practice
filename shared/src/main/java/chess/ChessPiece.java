@@ -71,6 +71,8 @@ public class ChessPiece {
 
         switch (pieceType) {
             case KING:
+                KingMoveCalc kingMoveCalc = new KingMoveCalc(board, myPosition);
+                return kingMoveCalc.pieceMoves(board, myPosition);
 
             case QUEEN:
                 QueenMoveCalc queenMoveCalc = new QueenMoveCalc(board,myPosition);
@@ -89,6 +91,8 @@ public class ChessPiece {
                 return rookMoveCalc.pieceMoves(board, myPosition);
 
             case PAWN:
+                PawnMoveCalc pawnMoveCalc = new PawnMoveCalc(board, myPosition);
+                return pawnMoveCalc.pieceMoves(board, myPosition);
 
             default:
                 throw new RuntimeException("Not a valid piece type");
