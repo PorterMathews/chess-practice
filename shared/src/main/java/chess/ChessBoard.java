@@ -1,5 +1,8 @@
 package chess;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * A chessboard that can hold and rearrange chess pieces.
  * <p>
@@ -8,6 +11,20 @@ package chess;
  */
 public class ChessBoard {
     private final ChessPiece[][] chessBoard = new ChessPiece[9][9];
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessBoard that = (ChessBoard) o;
+        return Objects.deepEquals(chessBoard, that.chessBoard);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(chessBoard);
+    }
 
     public ChessBoard() {
         
@@ -63,23 +80,27 @@ public class ChessBoard {
      *
      * @param position The position you are moving to
      * @param piece The piece you are moving
-     * @return true if there is an enemy in position
+     * @return true if there is an enemy in position or it is empty
      */
     public boolean isSpaceOccupiedByEnemy(ChessPosition position, ChessPiece piece) {
         if (piece == null) {
             throw new RuntimeException("No moving piece found");
         }
         if (getPiece(position) == null) {
-            return false;
+            return true;
         }
         ChessPiece destinationPiece = getPiece(position);
         return destinationPiece.getTeamColor() != piece.getTeamColor();
     }
 
+    /**
+     *
+     * @param position The position that you're checking if it is occupied
+     * @return True if the space is occupied
+     */
     public boolean isSpaceOccupied(ChessPosition position) {
         return getPiece(position) != null;
     }
-
 
     /**
      *
@@ -89,5 +110,14 @@ public class ChessBoard {
      */
     public boolean validMove(ChessPosition position, ChessPiece piece) {
         return isInBounds(position) && isSpaceOccupiedByEnemy(position, piece);
+    }
+
+    /**
+     *
+     * @param position The Position you're moving to
+     * @return ture if it is in bounds and not occupied by anyone
+     */
+    public boolean validMovePawn(ChessPosition position) {
+        return isInBounds(position) && !isSpaceOccupied(position);
     }
 }

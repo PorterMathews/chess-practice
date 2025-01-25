@@ -7,24 +7,70 @@ public interface pieceMovesCalc {
     public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition position);
 }
 
-public class KnightPieceMovesCalc implements pieceMovesCalc {
+class KnightPieceMovesCalc implements pieceMovesCalc {
 
-    public KnightPieceMovesCalc(ChessBoard board, ChessPosition myPosition) {
-
-    }
-    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition position) {
+    @Override
+    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
         Collection<ChessMove> pieceMoves = new ArrayList<>();
-
-        int [][] possibilities = {
+        int[][] possibilities = {
                 {1, -2}, {2, -1}, {2, 1}, {1, 2},
                 {-1, -2}, {-2, -1}, {-2, 1}, {-1, 2}
-
         };
+        ChessPiece myPiece = board.getPiece(myPosition);
+        for (int[] possible: possibilities) {
+            ChessPosition possiblePosition = new ChessPosition(
+                    myPosition.getRow() + possible[0],
+                    myPosition.getColumn() + possible[1]
+            );
+            if (board.validMove(possiblePosition, myPiece)) {
+                pieceMoves.add(new ChessMove(myPosition, possiblePosition, null));
+            };
+        };
+        return pieceMoves;
+    }
+}
 
-        for int[] possible: possibilities:
+class BishopMoveCalc extends MoveHelper implements pieceMovesCalc {
 
-        }
-
+    public BishopMoveCalc(ChessBoard board, ChessPosition myPosition) {
+        super(board, myPosition);
     }
 
+    @Override
+    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> pieceMoves = new ArrayList<>();
+        pieceMoves.addAll(diagMoves(board, myPosition));
+        return pieceMoves;
+    }
 }
+
+class RookMoveCalc extends MoveHelper implements pieceMovesCalc {
+
+    public RookMoveCalc(ChessBoard board, ChessPosition myPosition) {
+        super(board, myPosition);
+    }
+
+    @Override
+    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> pieceMoves = new ArrayList<>();
+        pieceMoves.addAll(straightMoves(board, myPosition));
+        return pieceMoves;
+    }
+}
+
+class QueenMoveCalc extends MoveHelper implements pieceMovesCalc {
+
+    public QueenMoveCalc(ChessBoard board, ChessPosition myPosition) {
+        super(board, myPosition);
+    }
+
+    @Override
+    public Collection<ChessMove> pieceMoves(ChessBoard board, ChessPosition myPosition) {
+        Collection<ChessMove> pieceMoves = new ArrayList<>();
+        pieceMoves.addAll(straightMoves(board, myPosition));
+        pieceMoves.addAll(diagMoves(board, myPosition));
+        return pieceMoves;
+    }
+}
+
+
