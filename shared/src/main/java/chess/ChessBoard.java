@@ -10,7 +10,11 @@ import java.util.Objects;
  * signature of the existing methods.
  */
 public class ChessBoard {
-    private final ChessPiece[][] chessBoard = new ChessPiece[9][9];
+    private final ChessPiece[][] chessBoard;
+
+    public ChessBoard() {
+        this.chessBoard = new ChessPiece[9][9];
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -26,15 +30,11 @@ public class ChessBoard {
         return Arrays.deepHashCode(chessBoard);
     }
 
-    public ChessBoard() {
-        
-    }
-
     /**
      * Adds a chess piece to the chessboard
      *
      * @param position where to add the piece to
-     * @param piece   the piece to add
+     * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
         chessBoard[position.getRow()][position.getColumn()] = piece;
@@ -56,115 +56,117 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        for (int col = 0; col <= 8; col++){
+        for (int col = 0; col <= 8; col++) {
             for (int row = 0; row <= 8; row++) {
-                chessBoard[row][col]  = null;
+                chessBoard[row][col] = null;
             }
-
-            col = 1;
-            while (col <= 8) {
-                addPiece(new ChessPosition(2, col), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
-                addPiece(new ChessPosition(7, col), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
-                col ++;
-            }
-
-            //White pieces
-            addPiece(new ChessPosition(1, 1), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
-            addPiece(new ChessPosition(1, 2), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
-            addPiece(new ChessPosition(1,3), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP));
-            addPiece(new ChessPosition(1, 4), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.QUEEN));
-            addPiece(new ChessPosition(1,5), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KING));
-            addPiece(new ChessPosition(1,6), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP));
-            addPiece(new ChessPosition(1, 7), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
-            addPiece(new ChessPosition(1, 8), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
-
-            //Black pieces
-            addPiece(new ChessPosition(8, 1), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK));
-            addPiece(new ChessPosition(8, 2), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT));
-            addPiece(new ChessPosition(8,3), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP));
-            addPiece(new ChessPosition(8, 4), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.QUEEN));
-            addPiece(new ChessPosition(8,5), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KING));
-            addPiece(new ChessPosition(8,6), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP));
-            addPiece(new ChessPosition(8, 7), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT));
-            addPiece(new ChessPosition(8, 8), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK));
-
         }
-    }
 
+        int column = 1;
+        while (column <= 8) {
+            addPiece(new ChessPosition(2, column), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.PAWN));
+            addPiece(new ChessPosition(7, column), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.PAWN));
+            column++;
+        }
+
+        //WhitePieces
+        addPiece(new ChessPosition(1, 1), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
+        addPiece(new ChessPosition(1, 2), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
+        addPiece(new ChessPosition(1, 3), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP));
+        addPiece(new ChessPosition(1, 4), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.QUEEN));
+        addPiece(new ChessPosition(1, 5), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KING));
+        addPiece(new ChessPosition(1, 6), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.BISHOP));
+        addPiece(new ChessPosition(1, 7), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.KNIGHT));
+        addPiece(new ChessPosition(1, 8), new ChessPiece(ChessGame.TeamColor.WHITE, ChessPiece.PieceType.ROOK));
+
+        //BlackPieces
+        addPiece(new ChessPosition(8, 1), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK));
+        addPiece(new ChessPosition(8, 2), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT));
+        addPiece(new ChessPosition(8, 3), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP));
+        addPiece(new ChessPosition(8, 4), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.QUEEN));
+        addPiece(new ChessPosition(8, 5), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KING));
+        addPiece(new ChessPosition(8, 6), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.BISHOP));
+        addPiece(new ChessPosition(8, 7), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.KNIGHT));
+        addPiece(new ChessPosition(8, 8), new ChessPiece(ChessGame.TeamColor.BLACK, ChessPiece.PieceType.ROOK));
+    }
 
     /**
      *
-     * @param position the position you're trying to move to
-     * @return true if it is not off the map
+     * @param checkPosition The position you are checking
+     * @return True if in bounds
      */
-    public boolean isInBounds(ChessPosition position) {
-        if (position == null) {
+    public boolean isInBounds(ChessPosition checkPosition) {
+        if (checkPosition.getColumn() > 8 || checkPosition.getRow() > 8 ||
+                checkPosition.getColumn() < 1 || checkPosition.getRow() < 1) {
             return false;
         }
-        if (position.getRow() <= 0 || position.getRow() > 8 || position.getColumn() <= 0 || position.getColumn() > 8) {
-            return false;
-        } else {
+        return true;
+    }
+
+    /**
+     *
+     * @param checkPosition The position the potential other piece is at
+     * @param myPiece The piece you are attempting to move to checkPosition
+     * @return True if the piece is a different color or if the space is empty
+     */
+    public boolean isOccupiedByEnemy(ChessPosition checkPosition, ChessPiece myPiece) {
+        if (getPiece(checkPosition) == null) {
             return true;
         }
+        ChessPiece occupiedPiece = getPiece(checkPosition);
+        return occupiedPiece.getTeamColor() != myPiece.getTeamColor();
     }
 
     /**
      *
-     * @param position The position you are moving to
-     * @param piece The piece you are moving
-     * @return true if there is an enemy in position or it is empty
+     * @param checkPosition The position you want to know if it is occupied
+     * @return returns true if occupied
      */
-    public boolean isSpaceOccupiedByEnemy(ChessPosition position, ChessPiece piece) {
-        if (piece == null) {
-            throw new RuntimeException("No moving piece found");
-        }
-        if (getPiece(position) == null) {
-            return true;
-        }
-        ChessPiece destinationPiece = getPiece(position);
-        return destinationPiece.getTeamColor() != piece.getTeamColor();
+    public boolean isOccupied(ChessPosition checkPosition) {
+        return getPiece(checkPosition) != null;
     }
 
-    public boolean isPawnSpaceOccupiedByEnemy(ChessPosition position, ChessPiece piece) {
-        if (piece == null) {
-            throw new RuntimeException("No moving piece found");
-        }
-        if (getPiece(position) == null) {
+    /**
+     *
+     * @param checkPosition The position you are checking
+     * @param myPiece The piece you are attempting to move
+     * @return ture if the square is on the board and the checkPosition is empty or has an enemy piece
+     */
+    public boolean isValidMove(ChessPosition checkPosition, ChessPiece myPiece) {
+        return isInBounds(checkPosition) && isOccupiedByEnemy(checkPosition, myPiece);
+    }
+
+    /**
+     *
+     * @param checkPosition The position you are checking
+     * @param myPiece The piece you are attempting to move
+     * @return Ture only if the space is occupied by an enemy piece, else false
+     */
+    public boolean pawnIsOccupiedByEnemy(ChessPosition checkPosition, ChessPiece myPiece) {
+        if (getPiece(checkPosition) == null) {
             return false;
         }
-        ChessPiece destinationPiece = getPiece(position);
-        return destinationPiece.getTeamColor() != piece.getTeamColor();
+        ChessPiece occupiedPiece = getPiece(checkPosition);
+        return occupiedPiece.getTeamColor() != myPiece.getTeamColor();
     }
 
     /**
      *
-     * @param position The position that you're checking if it is occupied
-     * @return True if the space is occupied
+     * @param checkPosition The position you are trying to move to
+     * @return true if the position is in bounds and is not occupied
      */
-    public boolean isSpaceOccupied(ChessPosition position) {
-        return getPiece(position) != null;
+    public boolean isValidPawnMove(ChessPosition checkPosition) {
+        return isInBounds(checkPosition) && !isOccupied(checkPosition);
     }
 
     /**
      *
-     * @param position position you're moving to
-     * @param piece the piece you are attempting to move
-     * @return returns true if the space is on the board or occupied by an enemy
+     * @param checkPosition The position you are attempting to attack
+     * @param myPiece The piece you are attacking with, pawn
+     * @return true if the position is in bounds and is occupied by an enemy
      */
-    public boolean validMove(ChessPosition position, ChessPiece piece) {
-        return isInBounds(position) && isSpaceOccupiedByEnemy(position, piece);
+    public boolean isValidPawnAttack(ChessPosition checkPosition, ChessPiece myPiece) {
+        return isInBounds(checkPosition) && pawnIsOccupiedByEnemy(checkPosition, myPiece);
     }
 
-    /**
-     *
-     * @param position The Position you're moving to
-     * @return ture if it is in bounds and not occupied by anyone
-     */
-    public boolean validMovePawn(ChessPosition position) {
-        return isInBounds(position) && !isSpaceOccupied(position);
-    }
-
-    public boolean validAttackPawn(ChessPosition position, ChessPiece myPiece) {
-        return isInBounds(position) && isPawnSpaceOccupiedByEnemy(position, myPiece);
-    }
 }

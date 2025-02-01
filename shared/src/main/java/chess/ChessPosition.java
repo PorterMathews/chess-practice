@@ -12,6 +12,11 @@ public class ChessPosition {
     private final int row;
     private final int col;
 
+    public ChessPosition(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {
@@ -24,11 +29,6 @@ public class ChessPosition {
     @Override
     public int hashCode() {
         return Objects.hash(row, col);
-    }
-
-    public ChessPosition(int row, int col) {
-        this.row = row;
-        this.col = col;
     }
 
     /**
